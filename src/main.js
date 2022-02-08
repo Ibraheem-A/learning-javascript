@@ -1,64 +1,30 @@
-// object literals
+const myForm = document.querySelector('#my-form');
+const nameInput = document.querySelector('#name');
+const emailInput = document.querySelector('#email');
+var msg = document.querySelector('.msg');
+const userList = document.querySelector('#users');
 
-const todos = [
-    {
-        id: 1,
-        text: 'Take out trash',
-        isCompleted: true
-    },
-    {
-        id: 2,
-        text: 'Meeting with Boss',
-        isCompleted: true
-    },
-    {
-        id: 3,
-        text: 'Doctors appointment',
-        isCompleted: false
+myForm.addEventListener('submit', onSubmit);
+
+function onSubmit(e){
+    e.preventDefault();
+    if (nameInput.value === '' || emailInput.value === '') {
+        msg.style.color = 'red';
+        msg.innerHTML = 'Please enter all fields!'
+
+        setTimeout(() => msg.remove(), 3000) 
+    } else if (!emailInput.value.includes('@')){
+        msg.style.color = 'red';
+        msg.innerHTML = 'Please enter a valid email address!'
+
+        setTimeout(() => msg.remove(), 3000)
+    } else{
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(`${nameInput.value} : ${emailInput.value}`));
+        userList.appendChild(li);
+
+        // Clear fields
+        nameInput.value=''
+        emailInput.value=''
     }
-];
-
-/*
-Convert object literals to JSON
-*/
-const todosJSON = JSON.stringify(todos);
-// console.log(todosJSON)
-
-/*
-traditional for loop
-*/
-for (let i=0; i<todos.length; i++){
-    console.log(`Todo ${i} = ${todos[i].text}`)
 }
-
-/*
-forOf loop
-*/
-for(let todo of todos) {
-    // console.log(todo.text);
-}
-
-/*
-forEach loop
-*/
-todos.forEach(function(todo){
-    // console.log(todo.text);
-});
-
-/*
-Map: Returns an array
-*/
-const todoMap = todos.map(function(todo){
-    return todo.text;
-});
-// console.log(todoMap);
-
-/*
-filter: to filter using condition
-*/
-const todoIsCompleted = todos.filter(function(todo){
-    return todo.isCompleted === true;
-}).map(function(todo){
-    return todo.text;
-});
-// console.log(todoIsCompleted);
